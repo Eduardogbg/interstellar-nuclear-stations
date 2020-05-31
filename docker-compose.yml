@@ -1,0 +1,48 @@
+version: "3.3"
+services:
+  base:
+    build:
+      args:
+        REPO_MOUNT_POINT: $REPO_MOUNT_POINT      
+      context: .
+    image: $BASE_IMAGE_NAME
+  
+  db:
+    image: postgres:11
+    env_file:
+      - .env
+    working_dir: /
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+      - ./data:/data
+    ports:
+      - $DB_HOST_PORT:$DB_CONTAINER_PORT
+    restart: unless-stopped
+    networks:
+      - local
+    command:
+      postgres -c logging_collector=on -c log_destination=stderr -c
+      log_directory=/var/lib/postgresql/data/logs -c log_rotation_age=60 -c
+      log_truncate_on_rotation=on -c log_filename=server_log.hour.%H%M
+
+  api:
+    image: $BASE_IMAGE_NAME
+    env_file:
+      - .env
+    environment:
+      PORT: $API_CONTAINER_PORT
+    depends_on:
+      - db
+    volumes:
+      - .:$REPO_MOUNT_POINT:delegated
+    ports:
+      - $API_HOST_PORT:$API_CONTAINER_PORT
+    networks:
+      - local
+    command: ["yarn", "workspace", "api", "start"]
+
+networks:
+  local:
+
+volumes:
+  db-volume:

@@ -1,0 +1,7 @@
+{
+  "name": "interstellar-nuclear-stations",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

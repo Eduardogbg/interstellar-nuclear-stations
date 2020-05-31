@@ -1,0 +1,16 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "node ./src/index"
+  },
+  "dependencies": {
+    "apollo-datasource-rest": "^0.9.2",
+    "apollo-server": "^2.14.1",
+    "graphql": "14",
+    "pg": "^8.2.1",
+    "postgraphile": "^4.7.0",
+    "postgraphile-apollo-server": "^0.1.1"
+  }
+}
