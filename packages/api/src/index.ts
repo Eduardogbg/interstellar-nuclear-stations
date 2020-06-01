@@ -17,14 +17,14 @@ const postGraphileOptions = {
 }
 
 async function main() {
-  const { schema: psSchema, plugin } = await makeSchemaAndPlugin(
+  const { schema: pgSchema, plugin } = await makeSchemaAndPlugin(
     pgPool,
     'public',
     postGraphileOptions
   );
 
   const schema = mergeSchemas({ 
-    schemas: [psSchema, arcsecondSchema]
+    schemas: [pgSchema, arcsecondSchema]
   });
   
   const server = new ApolloServer({

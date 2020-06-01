@@ -4,6 +4,7 @@ import type { AsyncPaginatedGetter, paginatorParams } from '../types/API';
 async function* paginationFlatGenerator<T>(getter: AsyncPaginatedGetter<T>, params: paginatorParams) {
   const { batch, cursor, pageSize } = params;
   let page = cursor ? Math.ceil(cursor / pageSize) : 1;
+  let leftover = cursor ? (cursor - 1) % pageSize : 0;
   let hasNext = true;
 
   const getPage = async (page: number) => {
@@ -32,7 +33,12 @@ async function* paginationFlatGenerator<T>(getter: AsyncPaginatedGetter<T>, para
 
     // Yields pages of the batch by resolve order
     for (const results of await Promise.all(requests)) {
-      yield* results; // yields 1-by-1
+      if (leftover) {
+        yield* results.slice(leftover);
+        leftover = 0;
+      } else {
+        yield* results;
+      }
     }
   }
 }

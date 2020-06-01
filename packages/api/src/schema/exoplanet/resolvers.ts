@@ -8,7 +8,7 @@ const suitablePlanets: AsyncCursorResolver<Exoplanet> = async (
 ) => {
   const generator = paginationFlatGenerator(
     dataSources.arcsecondAPI.getExoplanets,
-    { batch: 5, cursor, pageSize: Math.min(4 * amount, 1000) }
+    { batch: 5, cursor, pageSize: Math.min(5 * amount, 1000) }
   );
   let nextCursor = 1;
 
