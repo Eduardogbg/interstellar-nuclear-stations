@@ -13,7 +13,11 @@ const pgPool = new Pool({
 const postGraphileOptions = {
   watchPg: true,
   graphiql: true,
-  enhanceGraphiql: true
+  enhanceGraphiql: true,
+  exportGqlSchemaPath: './src/generated/schema.graphql',
+  appendPlugins: [
+    require('@graphile-contrib/pg-simplify-inflector')
+  ]
 }
 
 async function main() {

@@ -6,6 +6,6 @@
 !.yarn/releases
 !.yarn/plugins
 
-.env
+**/*.env
 
 packages/api/build

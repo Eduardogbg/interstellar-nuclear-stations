@@ -1,4 +1,15 @@
 {
   "name": "db",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "scripts": {
+    "gm": "env-cmd graphile-migrate",
+    "watch": "yarn gm watch",
+    "init": "yarn gm init",
+    "commit": "yarn gm commit"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "env-cmd": "^10.1.0",
+    "graphile-migrate": "^0.3.1"
+  }
 }

@@ -10,7 +10,7 @@ services:
   db:
     image: postgres:11
     env_file:
-      - .env
+      - ps.env
     working_dir: /
     volumes:
       - db-volume:/var/lib/postgresql/data
@@ -28,13 +28,13 @@ services:
   api:
     image: $BASE_IMAGE_NAME
     env_file:
-      - .env
+      - ./packages/api/.env
     environment:
       PORT: $API_CONTAINER_PORT
     depends_on:
       - db
     volumes:
-      - .:$REPO_MOUNT_POINT:delegated
+      - .:$REPO_MOUNT_POINT
     ports:
       - $API_HOST_PORT:$API_CONTAINER_PORT
     networks:

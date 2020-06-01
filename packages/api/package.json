@@ -6,9 +6,12 @@
     "start": "tsc-watch --onSuccess \"node ./build\""
   },
   "dependencies": {
+    "@graphile-contrib/pg-simplify-inflector": "^6.0.0",
     "apollo-datasource-rest": "^0.9.2",
     "apollo-server": "^2.14.1",
+    "graphile-build": "^4.7.0",
     "graphql": "^14.0.2",
+    "graphql-tag": "^2.0.0",
     "graphql-tools": "^6.0.5",
     "lodash": "^4.17.15",
     "pg": "^8.2.1",
@@ -16,6 +19,10 @@
     "postgraphile-apollo-server": "^0.1.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.15.0",
+    "@graphql-codegen/typescript": "^1.15.0",
+    "@graphql-codegen/typescript-operations": "^1.15.0",
+    "@graphql-codegen/typescript-urql": "^1.15.0",
     "@types/lodash": "^4.14.154",
     "@types/node": "^14.0.6",
     "@types/pg": "^7.14.3",
