@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "importsNotUsedAsValues": "error",
+    "lib": ["ES2020.Promise", "ESNext"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "outDir": "build",
+    "rootDir": "src",
+    "target": "ES2015",
+    "types": ["node"],
+    "watch": false
+  },
+  "exclude": [
+    "build"
+  ],
+}

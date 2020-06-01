@@ -7,3 +7,5 @@
 !.yarn/plugins
 
 .env
+
+packages/api/build
