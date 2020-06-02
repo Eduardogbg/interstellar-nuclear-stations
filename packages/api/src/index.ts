@@ -21,7 +21,7 @@ const postGraphileOptions = {
 }
 
 async function main() {
-  const { schema: pgSchema, plugin } = await makeSchemaAndPlugin(
+  const { schema: pgSchema, plugin: postGraphilePlugin } = await makeSchemaAndPlugin(
     pgPool,
     'public',
     postGraphileOptions
@@ -34,10 +34,7 @@ async function main() {
   const server = new ApolloServer({
     schema,
     dataSources,
-    context: () => ({
-      token: 'foo'
-    }),
-    plugins: [plugin]
+    plugins: [postGraphilePlugin]
   });
 
   const { url } = await server.listen();

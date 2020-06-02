@@ -31,6 +31,12 @@ async function* paginationFlatGenerator<T>(getter: AsyncPaginatedGetter<T>, para
       Array.from({ length: batch }, iteratePages)
     );
 
+    // do jeito que foi implementado, parece que perdeu a vantagem do async generator
+    // pois há um Promise.all que espera todas as requests serem completadas
+    // na minha visão o async generator faria sentido quando o client especificasse
+    // quantos items ele quer, e enquanto o client não requisita mais planetas que o especificado
+    // não teria necessidade de mais fetchs
+    // --- mais comentários em NOTES.md ---
     // Yields pages of the batch by resolve order
     for (const results of await Promise.all(requests)) {
       if (leftover) {

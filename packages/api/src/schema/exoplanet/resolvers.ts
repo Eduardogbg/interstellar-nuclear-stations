@@ -2,45 +2,30 @@ import type { Exoplanet, AsyncCursorResolver } from '../../types';
 
 import paginationFlatGenerator from '../../lib/pagination-flat-generator';
 
-
 const suitablePlanets: AsyncCursorResolver<Exoplanet> = async (
   _source, { amount, cursor }, { dataSources }
 ) => {
-  const generator = paginationFlatGenerator(
+  const planetStream = paginationFlatGenerator(
     dataSources.arcsecondAPI.getExoplanets,
+    // e se não tiver nenhum planeta com +25 de massa nessas requests?
     { batch: 5, cursor, pageSize: Math.min(5 * amount, 1000) }
   );
+
+  let planets: Exoplanet[] = [];
   let nextCursor = 1;
-
-  // recursively iterate through yielded exoplanets until a suitable one is found
-  const iterateSuitable = async () => {
-    const { value: exoplanet } = await generator.next();
+  for await (const planet of planetStream) {
+    if (planets.length === amount) break;
+    if (!planet) { nextCursor = null; break };
+    nextCursor++;
     
-    if (!exoplanet) {
-      nextCursor = null;
-      return null;
-    }
-    ++nextCursor;
-
-    return exoplanet.mass?.value >= 25
-      ? exoplanet
-      : await iterateSuitable();
+    if (planet.mass?.value >= 25) 
+      planets.push(planet)
   }
 
-  /*
-      Until it fills an array of the requested amount, iterates asynchronously through
-    the yielded exoplanets.
-  */
-  const suitablePlanets: Exoplanet[] = await Promise.all(
-    Array.from({ length: amount }, iterateSuitable)
-  );
-  // In case the source runs out of exoplanets before we fulfill the requested amount
-  const suitableFound = suitablePlanets.filter(Boolean);
-
   return {
-    count: suitableFound.length,
+    count: planets.length,
     cursor: nextCursor,
-    results: suitableFound
+    results: planets
   };
 }
 
