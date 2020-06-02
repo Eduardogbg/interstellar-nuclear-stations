@@ -68,16 +68,18 @@ Agora deu certo, mas porque dar tantas configurações, se elas não vão config
 ## Review do código
 
 Pontos gerais notados:
+- Foi legal que Typescript ter usado;
+- Foi positivo ter documentado as mudanças no código no git;
 - A mutation de `installStation` não foi implementada;
 - Testes não foram implementados;
 - Sem explicação do porque ter usado as libs que foram usadas, e documentação;
 - Gostei de ter tido a iniciativa de ter posto paginação, porém o cursor retornado não funciona, pois ele sempre é resetado pra 1;
 - Achei _interessante_ a ideia do async generator pra pegar os planetas;
-- Achei interessante a estrutura do projeto, pra projetos mais massivos.
+- Achei _interessante_ a estrutura do projeto, pra projetos mais massivos.
 
 ### Async Generator
 
-Pareceu que o async generator foi uma solução "too smart", pareceu um pouco engessada, não se adequando muito ao problema.
+Pareceu que o async generator foi uma solução "too smart", pareceu um pouco engessada, não se adequando muito ao problema, como eu vou comentar em seguida:
 
 Como comentado no `./packages/api/src/lib/pagination-flat-generator.ts` do jeito que foi implementado sempre quando instanciado o _generator_,
 ele vai dar fetch em todas as requests, e a parte do _generator_ só pareceu um syntactic sugar complicado de entender 
@@ -98,7 +100,7 @@ Dessa forma, entendo que o projeto já utilizou dele, portanto o code review no 
 Parece que o projeto foi needlessly complicated, tanto em bibliotecas(graphile, não entendi o .pnp.js, codegen), estrutura(dividir em packages, pasta .yarn cacheada), código (async generator, pagination).
 
 Entendo que é interessante mostrar o quanto sabemos, mas também temos que perceber o quanto essas ferramentas se adequam ao problema e quanto elas as resolvem bem.
-Não adianta usar uma máquina industrial de corte a diamante, pra abrir o pacote de ketchup, as vezes é mais difícil fazer o setup e a manutenção da máquina toda,
+Não adianta usar uma máquina industrial de corte a diamante, pra abrir um pacote de ketchup, as vezes é mais difícil fazer o setup e a manutenção da máquina toda,
 pra um problema que é inerentemente mais simples e pode ser resolvido com algo bem mais fácil de entender por todos.
 
 Pois nesse caso, o código ficou difícil de ler, e a response time ficou lenta. Não teve muita vantagem a complexidade do código então.
@@ -106,7 +108,8 @@ Pois nesse caso, o código ficou difícil de ler, e a response time ficou lenta.
 Fora isso, deu de ver que foi posto um esforço considerável na hora de fazer o setup do projeto, de fazer o mega-ultra-genérico async generator com paginação,
 e tem-se um conhecimento avançado no JS/TS.
 
-O meu maior pontos de atenção pra melhoria seriam realmente:
+O meu maior ponto de atenção pra melhoria seriam realmente:
 - Será que essa ferramenta, que sim, parece muito massa, muito ultra-genérica e tudo, mas será que essa ferramenta vai atender ao problema de forma satisfatória?
   Tanto pro código ficar simples(_note_: simples != burro), quanto pra atender aos requisitos de uso(response-time)
 
+Fora isso acho que você tem um grande conhecimento técnico!
